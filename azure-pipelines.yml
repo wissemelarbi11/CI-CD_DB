@@ -23,11 +23,19 @@ steps:
 
 - task: VSBuild@1
   inputs:
-    solution: '$(solution)'
+    solution: '**/*.sqlproj'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: CopyFiles@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**\*.dacpac'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'dev-prop'
+    publishLocation: 'pipeline'
+
