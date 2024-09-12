@@ -7,6 +7,8 @@ trigger:
 - master
 
 pool: mycomputeragent
+demands:
+    - agent.name -equals DESKTOP-0SQGCUQ
 
 
 variables:
